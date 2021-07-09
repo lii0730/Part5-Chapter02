@@ -11,7 +11,8 @@ import com.example.aop_part5_chapter02.R
 import com.example.aop_part5_chapter02.data.entity.product.ProductEntity
 import com.example.aop_part5_chapter02.databinding.ProductRecyclerviewItemBinding
 
-class ProductListAdapter :ListAdapter<ProductEntity, ProductListAdapter.ViewHolder>(differ) {
+class ProductListAdapter(val onProductItemClicked: (ProductEntity) -> Unit) :
+	ListAdapter<ProductEntity, ProductListAdapter.ViewHolder>(differ) {
 
 	inner class ViewHolder(
 		private val binding: ProductRecyclerviewItemBinding
@@ -24,11 +25,21 @@ class ProductListAdapter :ListAdapter<ProductEntity, ProductListAdapter.ViewHold
 				.load(item.productImage)
 				.centerCrop()
 				.into(productImageView)
+
+			binding.root.setOnClickListener {
+				onProductItemClicked(item)
+			}
 		}
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-		return ViewHolder(ProductRecyclerviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+		return ViewHolder(
+			ProductRecyclerviewItemBinding.inflate(
+				LayoutInflater.from(parent.context),
+				parent,
+				false
+			)
+		)
 	}
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {

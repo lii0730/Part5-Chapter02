@@ -15,7 +15,7 @@ data class ProductResponse(
     fun toEntity() : ProductEntity =
         ProductEntity(
             id = id.toLong(),
-            createdAt = Date(createdAt),
+            createdAt = createdAt,
             product_name = product_name,
             productPrice = productPrice.toDouble().toInt(),
             productImage = productImage,

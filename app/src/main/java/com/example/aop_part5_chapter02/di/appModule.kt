@@ -9,7 +9,10 @@ import com.example.aop_part5_chapter02.data.network.provideProductRetrofit
 import com.example.aop_part5_chapter02.data.repository.DefaultProductRepository
 import com.example.aop_part5_chapter02.data.repository.ProductRepository
 import com.example.aop_part5_chapter02.domain.todo.GetLocalProductListUseCase
+import com.example.aop_part5_chapter02.domain.todo.GetProductEntityUseCase
 import com.example.aop_part5_chapter02.domain.todo.GetProductListUseCase
+import com.example.aop_part5_chapter02.domain.todo.OrderProductEntityUseCase
+import com.example.aop_part5_chapter02.presentation.Home.Detail.ProductDetailViewModel
 import com.example.aop_part5_chapter02.presentation.Home.FragmentHomeViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidApplication
@@ -23,6 +26,10 @@ val appModule = module {
 	// viewModel
 	viewModel {
 		FragmentHomeViewModel(get())
+	}
+
+	viewModel {
+		(productId: Long) -> ProductDetailViewModel(productId, get(), get())
 	}
 
 	// Database
@@ -45,4 +52,6 @@ val appModule = module {
 	// UseCase
 	single { GetProductListUseCase(get()) }
 	single { GetLocalProductListUseCase(get()) }
+	single { GetProductEntityUseCase(get()) }
+	single { OrderProductEntityUseCase(get())}
 }

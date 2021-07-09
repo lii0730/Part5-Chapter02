@@ -21,5 +21,4 @@ internal class FragmentHomeViewModel(
 		_productListStateLiveData.postValue(ProductListState.Loading)
 		_productListStateLiveData.postValue(ProductListState.Success(getProductListUseCase()))
 	}
-
 }

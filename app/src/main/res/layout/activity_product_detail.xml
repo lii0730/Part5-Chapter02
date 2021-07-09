@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	tools:context=".presentation.Home.Detail.ProductDetailActivity">
+
+	<com.google.android.material.appbar.AppBarLayout
+		android:id="@+id/appBar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/white">
+
+		<com.google.android.material.appbar.CollapsingToolbarLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:paddingTop="?attr/actionBarSize"
+				android:paddingBottom="16dp"
+				android:paddingHorizontal="16dp">
+
+				<ImageView
+					android:id="@+id/productImageView"
+					android:layout_width="0dp"
+					android:layout_height="0dp"
+					tools:src="@drawable/intro"
+					android:scaleType="fitXY"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintDimensionRatio="w,1:2"/>
+
+				<TextView
+					android:id="@+id/productCategoryTextView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					tools:text="Cheese"
+					app:layout_constraintStart_toStartOf="@+id/productImageView"
+					app:layout_constraintTop_toBottomOf="@+id/productImageView"
+					app:layout_constraintBottom_toBottomOf="parent"
+					android:layout_marginTop="16dp"
+					android:layout_marginBottom="?attr/actionBarSize"
+					android:textColor="@color/black"
+					android:textSize="20sp"
+					android:textStyle="bold"/>
+
+				<TextView
+					android:id="@+id/productPriceTextView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					app:layout_constraintTop_toTopOf="@+id/productCategoryTextView"
+					app:layout_constraintEnd_toEndOf="@id/productImageView"
+					app:layout_constraintBottom_toBottomOf="@+id/productCategoryTextView"
+					tools:text="1000원"
+					android:textColor="@color/black"
+					android:textSize="20sp"
+					android:textStyle="bold"/>
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+			<androidx.appcompat.widget.Toolbar
+				android:id="@+id/toolBar"
+				android:layout_width="match_parent"
+				android:layout_height="?attr/actionBarSize"
+				app:layout_collapseMode="pin"
+				app:popupTheme="@style/AppTheme.PopupOverlay"
+				app:navigationIcon="?attr/homeAsUpIndicator"
+				android:background="@color/white"
+				tools:title="Incredible Soft Shoes"/>
+
+		</com.google.android.material.appbar.CollapsingToolbarLayout>
+
+	</com.google.android.material.appbar.AppBarLayout>
+
+	<androidx.core.widget.NestedScrollView
+		android:id="@+id/imageContainer"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_constraintTop_toBottomOf="@id/appBar"
+		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+		<ImageView
+			android:id="@+id/productIntroductionImageView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			tools:src="@drawable/galaxy"
+			android:scaleType="fitXY"/>
+	</androidx.core.widget.NestedScrollView>
+
+	<Button
+		android:id="@+id/orderButton"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
+		android:text="@string/string_order"
+		android:layout_marginHorizontal="16dp"
+		android:layout_marginBottom="6dp"
+		android:textStyle="bold"
+		android:textColor="@color/white"
+		android:textSize="24sp"
+		android:background="@color/design_default_color_primary"
+		android:foreground="?android:attr/selectableItemBackground"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

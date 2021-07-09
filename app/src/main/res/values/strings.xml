@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">AOP-Part5-Chapter02</string>
+	<string name="app_name">AOP-Part5-Chapter02</string>
+	<string name="string_order">주문하기</string>
 </resources>
