@@ -9,9 +9,9 @@ import java.util.*
 data class ProductEntity(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @SerializedName("createdAt") val createdAt: Long,
-    val product_name : String,
-    val productPrice: Int,
-    val productImage: String,
-    val productType: String,
-    val productIntroductionImage: String
+    @SerializedName("product_name") val product_name : String,
+    @SerializedName("product_price") val productPrice: Int,
+    @SerializedName("product_image") val productImage: String,
+    @SerializedName("product_type") val productType: String,
+    @SerializedName("product_introduction_image") val productIntroductionImage: String
 )

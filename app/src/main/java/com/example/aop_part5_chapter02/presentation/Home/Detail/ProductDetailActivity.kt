@@ -44,6 +44,7 @@ internal class ProductDetailActivity : BaseActivity<ProductDetailViewModel, Acti
 		
 		orderButton.setOnClickListener { 
 			viewModel.orderProduct()
+			finish()
 		}
 	}
 	

@@ -1,6 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<androidx.constraintlayout.widget.Group
+		android:id="@+id/profileGroup"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:constraint_referenced_ids="profileImageView, profileNameTextView, logoutButton"
+		android:visibility="gone"
+		tools:visibility="visible"/>
+
+	<ImageView
+		android:id="@+id/profileImageView"
+		android:layout_width="120dp"
+		android:layout_height="120dp"
+		tools:src="@drawable/grade_like"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		android:layout_marginTop="24dp"/>
+
+	<TextView
+		android:id="@+id/profileNameTextView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintStart_toStartOf="@+id/profileImageView"
+		app:layout_constraintEnd_toEndOf="@+id/profileImageView"
+		app:layout_constraintTop_toBottomOf="@+id/profileImageView"
+		tools:text="LeeHsss"
+		android:textSize="16sp"
+		android:textStyle="bold"
+		android:textColor="@color/black"
+		android:layout_marginTop="8dp"/>
+
+	<Button
+		android:id="@+id/logoutButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="@+id/profileNameTextView"
+		app:layout_constraintBottom_toBottomOf="@+id/profileNameTextView"
+		android:layout_margin="8dp"
+		android:text="@string/string_logout"/>
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/orderedProductRecyclerView"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/logoutButton"
+		app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+		android:layout_marginTop="10dp"
+		android:paddingHorizontal="8dp"
+		tools:listitem="@layout/product_recyclerview_item"
+		app:spanCount="2"/>
+
+
+	<androidx.constraintlayout.widget.Group
+		android:id="@+id/loginViewGroup"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:constraint_referenced_ids="loginButton, loginTextView"
+		android:visibility="visible"
+		tools:visibility="gone"/>
+
+	<com.google.android.gms.common.SignInButton
+		android:id="@+id/loginButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"/>
+
+	<TextView
+		android:id="@+id/loginTextView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/loginButton"
+		android:text="@string/string_required_login"
+		android:textColor="@color/black"
+		android:layout_marginTop="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
