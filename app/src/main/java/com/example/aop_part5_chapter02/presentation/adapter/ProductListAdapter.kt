@@ -11,7 +11,7 @@ import com.example.aop_part5_chapter02.R
 import com.example.aop_part5_chapter02.data.entity.product.ProductEntity
 import com.example.aop_part5_chapter02.databinding.ProductRecyclerviewItemBinding
 
-class ProductListAdapter(val onProductItemClicked: (ProductEntity) -> Unit) :
+class ProductListAdapter(val onProductItemClicked: ((ProductEntity) -> Unit)) :
 	ListAdapter<ProductEntity, ProductListAdapter.ViewHolder>(differ) {
 
 	inner class ViewHolder(

@@ -9,10 +9,11 @@ import com.example.aop_part5_chapter02.data.network.provideProductRetrofit
 import com.example.aop_part5_chapter02.data.preference.PreferenceManager
 import com.example.aop_part5_chapter02.data.repository.DefaultProductRepository
 import com.example.aop_part5_chapter02.data.repository.ProductRepository
+import com.example.aop_part5_chapter02.domain.todo.*
+import com.example.aop_part5_chapter02.domain.todo.DeleteOrderedProductListUseCase
 import com.example.aop_part5_chapter02.domain.todo.GetOrderedProductListUseCase
 import com.example.aop_part5_chapter02.domain.todo.GetProductEntityUseCase
 import com.example.aop_part5_chapter02.domain.todo.GetProductListUseCase
-import com.example.aop_part5_chapter02.domain.todo.OrderProductEntityUseCase
 import com.example.aop_part5_chapter02.presentation.Home.Detail.ProductDetailViewModel
 import com.example.aop_part5_chapter02.presentation.Home.FragmentHomeViewModel
 import com.example.aop_part5_chapter02.presentation.MyPage.FragmentMyPageViewModel
@@ -37,7 +38,7 @@ val appModule = module {
 	}
 
 	viewModel {
-		FragmentMyPageViewModel(get(), get())
+		FragmentMyPageViewModel(get(), get(), get())
 	}
 
 	viewModel {
@@ -65,7 +66,8 @@ val appModule = module {
 	single { GetProductListUseCase(get()) }
 	single { GetOrderedProductListUseCase(get()) }
 	single { GetProductEntityUseCase(get()) }
-	single { OrderProductEntityUseCase(get())}
+	single { OrderProductEntityUseCase(get()) }
+	single { DeleteOrderedProductListUseCase(get()) }
 
 	// Preference Manager
 	single { PreferenceManager(androidContext()) }

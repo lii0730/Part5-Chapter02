@@ -1,6 +1,7 @@
 package com.example.aop_part5_chapter02.presentation.MyPage
 
 import android.app.Activity
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isGone
@@ -20,9 +21,15 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 internal class FragmentMyPage: BaseFragment<FragmentMyPageViewModel, FragmentMyBinding>() {
 
-	private val adapter = ProductListAdapter(onProductItemClicked = {
-		FragmentHome().handleItemClick(it)
-	})
+	companion object {
+		const val TAG = "FragmentMyPage"
+	}
+
+	private val adapter by lazy {
+		ProductListAdapter(onProductItemClicked = {
+
+		})
+	}
 
 	private val firebaseAuth: FirebaseAuth by lazy {
 		FirebaseAuth.getInstance()
@@ -37,22 +44,22 @@ internal class FragmentMyPage: BaseFragment<FragmentMyPageViewModel, FragmentMyB
 
 	private val gsc by lazy { GoogleSignIn.getClient(requireActivity(), gso) }
 
-	private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-		if(it.resultCode == Activity.RESULT_OK) {
-			val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-			try {
-				task.getResult(ApiException::class.java)?.let { account ->
-					viewModel.saveToken(account.idToken ?: throw Exception())
+	private val launcher =
+		registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+			if(it.resultCode == Activity.RESULT_OK) {
+				val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+				try {
+					task.getResult(ApiException::class.java)?.let { account ->
+						Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
+						viewModel.saveToken(account.idToken ?: throw Exception())
+					}
+				} catch (e: Exception) {
+					handleErrorState()
+					Log.e(TAG, e.toString())
 				}
-			} catch (e: Exception) {
-				handleErrorState()
 			}
 		}
-	}
 
-	companion object {
-		const val TAG = "FragmentMyPage"
-	}
 
 	override val viewModel: FragmentMyPageViewModel by viewModel()
 
@@ -81,9 +88,12 @@ internal class FragmentMyPage: BaseFragment<FragmentMyPageViewModel, FragmentMyB
 	}
 
 	private fun initViews() = with(binding) {
+		orderedProductRecyclerView.adapter = adapter
 		loginButton.setOnClickListener {
-			Toast.makeText(context, "구글 로그인을 시도합니다.", Toast.LENGTH_SHORT).show()
 			loginGoogle()
+		}
+		logoutButton.setOnClickListener {
+			logoutGoogle()
 		}
 	}
 
@@ -92,24 +102,32 @@ internal class FragmentMyPage: BaseFragment<FragmentMyPageViewModel, FragmentMyB
 		launcher.launch(signInIntent)
 	}
 
+	private fun logoutGoogle() {
+		firebaseAuth.signOut()
+		viewModel.signOut()
+		binding.profileGroup.isGone = true
+		binding.loginViewGroup.isVisible = true
+	}
+
 	private fun handleLoadingState() = with(binding) {
-		progressBar.isVisible = true
 		loginViewGroup.isGone = true
 	}
 
 	private fun handleLoginState(state: FragmentMyPageState.Login) {
-		binding.progressBar.isVisible = true
-
-		val credential = GoogleAuthProvider.getCredential(state.idToken, null)
-		firebaseAuth.signInWithCredential(credential)
-			.addOnCompleteListener(requireActivity()) {
-				if(it.isSuccessful) {
-					val user = firebaseAuth.currentUser
-					viewModel.setUserInfo(user)
-				} else {
-					viewModel.setUserInfo(null)
+		try {
+			val credential = GoogleAuthProvider.getCredential(state.idToken, state.idToken)
+			firebaseAuth.signInWithCredential(credential)
+				.addOnCompleteListener(requireActivity()) {
+					if(it.isSuccessful) {
+						val user = firebaseAuth.currentUser
+						viewModel.setUserInfo(user)
+					} else {
+						viewModel.setUserInfo(null)
+					}
 				}
-			}
+		} catch (e: Exception) {
+			Log.e(TAG, e.toString())
+		}
 	}
 
 	private fun handleSuccessState(state: FragmentMyPageState.Success) {
@@ -136,7 +154,7 @@ internal class FragmentMyPage: BaseFragment<FragmentMyPageViewModel, FragmentMyB
 		profileNameTextView.text = state.userName
 
 		if(state.productList.isEmpty()) {
-
+			Toast.makeText(context, "주문 리스트가 없습니다", Toast.LENGTH_SHORT).show()
 		} else {
 			adapter.submitList(state.productList)
 		}

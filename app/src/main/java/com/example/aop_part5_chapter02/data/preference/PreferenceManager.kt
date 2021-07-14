@@ -24,10 +24,15 @@ class PreferenceManager(context: Context) {
 	}
 
 	fun setIdToken(token: String) {
-//		editor.putString(TOKEN_KEY, token)
-//		editor.commit()
 		prefs.edit {
 			putString(TOKEN_KEY, token)
+			commit()
+		}
+	}
+
+	fun removeToken() {
+		prefs.edit {
+			putString(TOKEN_KEY, "")
 			commit()
 		}
 	}

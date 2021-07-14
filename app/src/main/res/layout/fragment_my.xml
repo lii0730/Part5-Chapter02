@@ -9,7 +9,7 @@
 		android:id="@+id/profileGroup"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		app:constraint_referenced_ids="profileImageView, profileNameTextView, logoutButton, orderedProductRecyclerView"
+		app:constraint_referenced_ids="profileImageView, profileNameTextView, logoutButton"
 		android:visibility="gone"
 		tools:visibility="visible"/>
 

@@ -5,9 +5,12 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.example.aop_part5_chapter02.R
 import com.example.aop_part5_chapter02.databinding.ActivityMainBinding
+import com.example.aop_part5_chapter02.databinding.FragmentMyBinding
 import com.example.aop_part5_chapter02.presentation.BaseActivity
+import com.example.aop_part5_chapter02.presentation.BaseFragment
 import com.example.aop_part5_chapter02.presentation.Home.FragmentHome
 import com.example.aop_part5_chapter02.presentation.MyPage.FragmentMyPage
+import com.example.aop_part5_chapter02.presentation.MyPage.FragmentMyPageViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -19,7 +22,7 @@ internal class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = getViewBinding()
         setContentView(binding.root)
 
         initViews()
@@ -29,6 +32,21 @@ internal class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>()
         changeFragment(FragmentHome(), FragmentHome.TAG)
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.menu_home -> {
+                changeFragment(FragmentHome(), FragmentHome.TAG)
+               true
+            }
+            R.id.menu_myPage -> {
+                viewModel.refreshOrderList()
+                changeFragment(FragmentMyPage(), FragmentMyPage.TAG)
+                true
+            }
+            else -> false
+        }
     }
 
     private fun changeFragment(fragment: Fragment, tag: String) {
@@ -48,21 +66,14 @@ internal class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>()
 
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            R.id.menu_home -> {
-                changeFragment(FragmentHome(), FragmentHome.TAG)
-               true
-            }
-            R.id.menu_myPage -> {
-                changeFragment(FragmentMyPage(), FragmentMyPage.TAG)
-                true
-            }
-            else -> false
-        }
-    }
-
     override fun observeData() {
-
+        viewModel.mainStateLiveData.observe(this) {
+            when(it) {
+                is MainState.RefreshOrderList -> {
+                    val fragment = supportFragmentManager.findFragmentByTag(FragmentMyPage.TAG)
+                    (fragment as? BaseFragment<*, *>)?.viewModel?.fetchData()
+                }
+            }
+        }
     }
 }
