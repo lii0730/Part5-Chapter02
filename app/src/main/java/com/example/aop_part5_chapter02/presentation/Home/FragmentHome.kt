@@ -12,6 +12,12 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 internal class FragmentHome : BaseFragment<FragmentHomeViewModel, FragmentHomeBinding>() {
 
+	companion object {
+		const val TAG = "FragmentHome"
+
+
+	}
+
 	override fun getViewBinding(): FragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater)
 
 	private val adapter = ProductListAdapter(
@@ -37,23 +43,23 @@ internal class FragmentHome : BaseFragment<FragmentHomeViewModel, FragmentHomeBi
 		//TODO 데이터 처리?!
 		viewModel.productListStateLiveData.observe(this) {
 			when(it) {
-				is ProductListState.Uninitialized -> {
+				is FragmentHomeState.Uninitialized -> {
 					initViews()
 				}
-				is ProductListState.Loading -> {
+				is FragmentHomeState.Loading -> {
 					handleLoadingState()
 				}
-				is ProductListState.Success -> {
+				is FragmentHomeState.Success -> {
 					handleSuccessState(it)
 				}
-				is ProductListState.Error -> {
+				is FragmentHomeState.Error -> {
 					handleErrorState()
 				}
 			}
 		}
 	}
 
-	private fun handleItemClick(productItem: ProductEntity) {
+	fun handleItemClick(productItem: ProductEntity) {
 		//TODO: 아이템을 선택했을 떄 ProductDetailActivity 로 전달?
 		val intent = Intent(context, ProductDetailActivity::class.java)
 		intent.putExtra(ProductDetailActivity.PRODUCT_ID_KEY, productItem.id)
@@ -64,7 +70,7 @@ internal class FragmentHome : BaseFragment<FragmentHomeViewModel, FragmentHomeBi
 		Toast.makeText(context, "에러가 발생하였습니다.", Toast.LENGTH_SHORT).show()
 	}
 
-	private fun handleSuccessState(state : ProductListState.Success) = with(binding) {
+	private fun handleSuccessState(state : FragmentHomeState.Success) = with(binding) {
 
 		if(state.productList.isNotEmpty()) {
 			adapter.apply {
@@ -77,5 +83,4 @@ internal class FragmentHome : BaseFragment<FragmentHomeViewModel, FragmentHomeBi
 	private fun handleLoadingState() = with(binding) {
 		swipeRefreshLayout.isRefreshing = true
 	}
-
 }

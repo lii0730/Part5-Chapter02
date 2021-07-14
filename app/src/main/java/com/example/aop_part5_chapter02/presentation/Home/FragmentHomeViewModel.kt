@@ -13,12 +13,12 @@ internal class FragmentHomeViewModel(
 ): BaseViewModel() {
 
 	// LiveData Observe
-	private var _productListStateLiveData = MutableLiveData<ProductListState>(ProductListState.Uninitialized)
+	private var _productListStateLiveData = MutableLiveData<FragmentHomeState>(FragmentHomeState.Uninitialized)
 
-	val productListStateLiveData : LiveData<ProductListState> = _productListStateLiveData
+	val productListStateLiveData : LiveData<FragmentHomeState> = _productListStateLiveData
 
 	override fun fetchData(): Job = viewModelScope.launch {
-		_productListStateLiveData.postValue(ProductListState.Loading)
-		_productListStateLiveData.postValue(ProductListState.Success(getProductListUseCase()))
+		_productListStateLiveData.postValue(FragmentHomeState.Loading)
+		_productListStateLiveData.postValue(FragmentHomeState.Success(getProductListUseCase()))
 	}
 }

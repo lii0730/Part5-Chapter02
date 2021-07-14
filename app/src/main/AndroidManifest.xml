@@ -14,7 +14,7 @@
 		android:usesCleartextTraffic="true">
 		<activity android:name=".presentation.Home.Detail.ProductDetailActivity"
 			android:theme="@style/AppTheme.PopupOverlay"/>
-		<activity android:name=".MainActivity">
+		<activity android:name=".presentation.main.MainActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 

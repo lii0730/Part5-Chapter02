@@ -1,7 +1,7 @@
 <resources>
 	<string name="app_name">AOP-Part5-Chapter02</string>
 	<string name="string_order">주문하기</string>
-	<string name="google_client_id">814023792097-h4ftnnptrjeohb9gagd3879qaaolmbvd.apps.googleusercontent.com</string>
+	<string name="google_client_id">814023792097-pp8pu19q1kl48i5p3asd93j06smatrb7.apps.googleusercontent.com</string>
 	<string name="string_required_login">구글 로그인이 필요합니다.</string>
 	<string name="string_logout">로그아웃</string>
 </resources>

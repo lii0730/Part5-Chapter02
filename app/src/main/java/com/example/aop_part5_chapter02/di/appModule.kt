@@ -1,12 +1,12 @@
 package com.example.aop_part5_chapter02.di
 
-import android.preference.PreferenceManager
 import com.example.aop_part5_chapter02.data.db.provideDB
 import com.example.aop_part5_chapter02.data.db.provideDao
 import com.example.aop_part5_chapter02.data.network.provideGsonConverterFactory
 import com.example.aop_part5_chapter02.data.network.provideOkHttpClient
 import com.example.aop_part5_chapter02.data.network.provideProductApiService
 import com.example.aop_part5_chapter02.data.network.provideProductRetrofit
+import com.example.aop_part5_chapter02.data.preference.PreferenceManager
 import com.example.aop_part5_chapter02.data.repository.DefaultProductRepository
 import com.example.aop_part5_chapter02.data.repository.ProductRepository
 import com.example.aop_part5_chapter02.domain.todo.GetOrderedProductListUseCase
@@ -16,6 +16,7 @@ import com.example.aop_part5_chapter02.domain.todo.OrderProductEntityUseCase
 import com.example.aop_part5_chapter02.presentation.Home.Detail.ProductDetailViewModel
 import com.example.aop_part5_chapter02.presentation.Home.FragmentHomeViewModel
 import com.example.aop_part5_chapter02.presentation.MyPage.FragmentMyPageViewModel
+import com.example.aop_part5_chapter02.presentation.main.MainViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -37,6 +38,10 @@ val appModule = module {
 
 	viewModel {
 		FragmentMyPageViewModel(get(), get())
+	}
+
+	viewModel {
+		MainViewModel()
 	}
 
 	// Database
